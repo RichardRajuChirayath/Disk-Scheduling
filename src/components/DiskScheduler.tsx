@@ -258,25 +258,22 @@ export default function DiskScheduler() {
             >
                 <motion.header
                     variants={headerVariants}
-                    className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/5 pb-8"
+                    className="flex flex-col items-center text-center gap-4 border-b border-white/5 pb-10"
                 >
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase transition-colors duration-500" style={{ color: COLORS[soloAlgo || 'FCFS'] }}>
-                            <BrainCircuit className="w-4 h-4" />
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.4em] uppercase opacity-60 transition-colors duration-500" style={{ color: COLORS[soloAlgo || 'FCFS'] }}>
+                            <BrainCircuit className="w-3.5 h-3.5" />
                             Expert Simulation Environment
                         </div>
-                        <h1 className="text-4xl font-black gradient-text tracking-tight">
-                            Disk Optimization Suite <span className="text-indigo-500/50 text-2xl font-light italic">v4.2 Pro</span>
-                        </h1>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <motion.div whileHover={{ scale: 1.02 }} className="px-6 py-3 bg-white/5 border border-white/10 rounded-2xl flex items-center gap-3">
-                            <span className="text-[10px] font-black uppercase text-slate-500">Target Track</span>
-                            <span className="text-xl font-black font-mono text-indigo-400">
-                                {results[soloAlgo || 'FCFS'].sequence[currentStep] ?? 'NULL'}
+                        <h1 className="text-5xl md:text-7xl font-black gradient-text tracking-tighter flex flex-col md:flex-row items-center gap-4 py-2">
+                            Disk Optimization Suite
+                            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xl font-medium tracking-normal text-slate-400 backdrop-blur-md inline-flex items-center gap-2">
+                                v4.2 <span className="text-indigo-500 font-bold italic">Pro</span>
                             </span>
-                        </motion.div>
+                        </h1>
+                        <p className="text-slate-500 text-sm font-medium tracking-wide max-w-2xl mx-auto leading-relaxed underline-offset-4">
+                            High-fidelity mechanical disk analysis engine with real-time heuristic intelligence, 3D architectural visualization, and performance delta auditing.
+                        </p>
                     </div>
                 </motion.header>
 
@@ -447,31 +444,37 @@ export default function DiskScheduler() {
                                 </section>
                             </div>
                         </div>
-                        <section className="glass-card overflow-hidden mb-8">
-                            <div className="px-6 py-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
-                                <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] flex items-center gap-3">
+                        <section className="glass-card overflow-hidden border-indigo-500/10 mb-6">
+                            <div className="px-6 py-4 border-b border-white/5 bg-black/40 flex items-center justify-between">
+                                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] flex items-center gap-3">
                                     <Terminal className="w-4 h-4 text-indigo-500" /> Kernel Audit Console
                                 </h3>
-                                <div className="flex gap-1.5">
-                                    <div className="w-2 h-2 rounded-full bg-rose-500/50" />
-                                    <div className="w-2 h-2 rounded-full bg-amber-500/50" />
-                                    <div className="w-2 h-2 rounded-full bg-emerald-500/50" />
+                                <div className="flex items-center gap-3">
+                                    <div className="text-[8px] font-mono text-slate-600 uppercase">SYS_LOG: ACTIVE</div>
+                                    <div className="flex gap-1.5">
+                                        <div className="w-2 h-2 rounded-full bg-rose-500/30" />
+                                        <div className="w-2 h-2 rounded-full bg-amber-500/30" />
+                                        <div className="w-2 h-2 rounded-full bg-emerald-500/30" />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="p-4 bg-black/40 font-mono text-[10px] h-[160px] overflow-y-auto custom-scrollbar space-y-1.5">
+                            <div className="p-5 bg-black/60 font-mono text-[11px] h-[180px] overflow-y-auto custom-scrollbar space-y-2 relative">
+                                {/* Scan line effect */}
+                                <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-20" />
+
                                 {logs.length === 0 ? (
                                     <div className="text-slate-600 italic">Static link established. Awaiting hardware interrupts...</div>
                                 ) : (
                                     logs.map((log, i) => (
-                                        <div key={i} className="flex gap-3">
-                                            <span className="text-slate-600">[{log.time}]</span>
+                                        <div key={i} className="flex gap-4 border-l border-white/5 pl-3">
+                                            <span className="text-slate-600 tabular-nums">[{log.time}]</span>
                                             <span className={
-                                                log.type === 'success' ? 'text-emerald-400' :
-                                                    log.type === 'warn' ? 'text-rose-400' : 'text-indigo-400'
+                                                log.type === 'success' ? 'text-emerald-400/80' :
+                                                    log.type === 'warn' ? 'text-rose-400/80' : 'text-indigo-400/80'
                                             }>
-                                                {log.type.toUpperCase()}:
+                                                {log.type.toUpperCase()}
                                             </span>
-                                            <span className="text-slate-300">{log.msg}</span>
+                                            <span className="text-slate-400 font-medium">{log.msg}</span>
                                         </div>
                                     ))
                                 )}
@@ -486,11 +489,11 @@ export default function DiskScheduler() {
                             </div>
                             <div className="p-0 overflow-x-auto custom-scrollbar">
                                 <table className="w-full text-left border-collapse">
-                                    <thead className="bg-white/[0.02]">
+                                    <thead className="bg-white/[0.03]">
                                         <tr>
-                                            <th className="px-8 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5">Algorithm</th>
-                                            <th className="px-8 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5 text-center">Seek Trace</th>
-                                            <th className="px-8 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-white/5 text-right">Raw Units</th>
+                                            <th className="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest border-b border-white/5">Mechanism</th>
+                                            <th className="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest border-b border-white/5 text-center">Architectural Trace</th>
+                                            <th className="px-8 py-5 text-[11px] font-black text-slate-400 uppercase tracking-widest border-b border-white/5 text-right">Computed units</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/[0.03]">
@@ -502,11 +505,11 @@ export default function DiskScheduler() {
                                                         <span className="text-xs font-black text-slate-200">{name}</span>
                                                     </div>
                                                 </td>
-                                                <td className="px-8 py-5">
-                                                    <div className="flex flex-wrap gap-2 justify-center max-w-2xl mx-auto">
+                                                <td className="px-8 py-6">
+                                                    <div className="flex flex-wrap gap-x-3 gap-y-2 justify-center max-w-3xl mx-auto">
                                                         {res.sequence.map((cyl, i) => (
-                                                            <div key={i} className={`flex items-center gap-1 text-[10px] font-mono ${i <= currentStep ? 'text-indigo-400 font-bold' : 'text-slate-700'}`}>
-                                                                {cyl} {i < res.sequence.length - 1 && <span className="text-slate-800 opacity-50 px-1">→</span>}
+                                                            <div key={i} className={`flex items-center gap-2 text-[11px] font-mono transition-all duration-300 ${i <= currentStep ? 'text-indigo-400 font-black scale-105' : 'text-slate-700 font-medium'}`}>
+                                                                {cyl} {i < res.sequence.length - 1 && <span className="text-slate-800/40 text-[9px] px-0.5">/</span>}
                                                             </div>
                                                         ))}
                                                     </div>
