@@ -258,22 +258,62 @@ export default function DiskScheduler() {
             >
                 <motion.header
                     variants={headerVariants}
-                    className="flex flex-col items-center text-center gap-4 border-b border-white/5 pb-10"
+                    className="flex flex-col items-center text-center gap-6 border-b border-white/5 pb-12"
                 >
-                    <div className="flex flex-col items-center gap-3">
-                        <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.4em] uppercase opacity-60 transition-colors duration-500" style={{ color: COLORS[soloAlgo || 'FCFS'] }}>
+                    <div className="flex flex-col items-center gap-4">
+                        <motion.div
+                            initial={{ opacity: 0, letterSpacing: "0.2em" }}
+                            animate={{ opacity: 0.6, letterSpacing: "0.4em" }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            className="flex items-center gap-2 font-mono text-[9px] tracking-[0.4em] uppercase transition-colors duration-500"
+                            style={{ color: COLORS[soloAlgo || 'FCFS'] }}
+                        >
                             <BrainCircuit className="w-3.5 h-3.5" />
                             Expert Simulation Environment
+                        </motion.div>
+
+                        <div className="relative group">
+                            <motion.h1
+                                className="text-6xl md:text-8xl font-black tracking-tighter flex flex-col md:flex-row items-center gap-6 py-2"
+                                initial="hidden"
+                                animate="visible"
+                            >
+                                <span className="gradient-text drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]">
+                                    {"Disk Optimization Suite".split("").map((char, i) => (
+                                        <motion.span
+                                            key={i}
+                                            variants={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                visible: { opacity: 1, y: 0 }
+                                            }}
+                                            transition={{ duration: 0.5, delay: i * 0.03 }}
+                                        >
+                                            {char}
+                                        </motion.span>
+                                    ))}
+                                </span>
+                                <motion.span
+                                    initial={{ scale: 0.8, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ delay: 1, duration: 0.8 }}
+                                    className="px-5 py-2 rounded-2xl border border-white/10 bg-white/5 text-2xl font-semibold tracking-normal text-slate-400 backdrop-blur-xl shadow-2xl inline-flex items-center gap-2"
+                                >
+                                    v4.2 <span className="text-indigo-500 font-black italic">Pro</span>
+                                </motion.span>
+                            </motion.h1>
+                            {/* Animated Background Glow under the Title */}
+                            <div className="absolute -inset-x-20 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black gradient-text tracking-tighter flex flex-col md:flex-row items-center gap-4 py-2">
-                            Disk Optimization Suite
-                            <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xl font-medium tracking-normal text-slate-400 backdrop-blur-md inline-flex items-center gap-2">
-                                v4.2 <span className="text-indigo-500 font-bold italic">Pro</span>
-                            </span>
-                        </h1>
-                        <p className="text-slate-500 text-sm font-medium tracking-wide max-w-2xl mx-auto leading-relaxed underline-offset-4">
-                            High-fidelity mechanical disk analysis engine with real-time heuristic intelligence, 3D architectural visualization, and performance delta auditing.
-                        </p>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.5, duration: 1 }}
+                            className="text-slate-400 text-sm md:text-base font-medium tracking-wide max-w-3xl mx-auto leading-relaxed"
+                        >
+                            <span className="text-indigo-400/80 mr-1 font-bold">Heuristic Engine:</span>
+                            High-fidelity mechanical disk analysis with real-time hardware interrupts, 3D architectural visualization, and performance auditing.
+                        </motion.p>
                     </div>
                 </motion.header>
 
