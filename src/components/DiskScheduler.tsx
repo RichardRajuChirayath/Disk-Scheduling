@@ -468,18 +468,36 @@ export default function DiskScheduler() {
                                         Performance Delta <Zap className="w-4 h-4 text-emerald-500" />
                                     </h3>
                                     <div className="space-y-3">
-                                        {metricsData.map((item, idx) => (
-                                            <div key={item.name} className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-black text-slate-200">{item.name}</span>
-                                                    <span className="text-[9px] font-bold text-slate-600 uppercase">RANK: {idx + 1}</span>
+                                        {metricsData.map((item, idx) => {
+                                            const fcfsTime = results['FCFS'].totalOperationalTime;
+                                            const efficiencyGain = fcfsTime > 0 ? ((fcfsTime - item.operationalTime) / fcfsTime) * 100 : 0;
+
+                                            return (
+                                                <div key={item.name} className={`flex items-center justify-between p-4 border transition-all duration-500 ${idx === 0 ? 'bg-indigo-500/10 border-indigo-500/30' : 'bg-white/[0.02] border-white/5'} rounded-2xl relative overflow-hidden group`}>
+                                                    {idx === 0 && (
+                                                        <div className="absolute top-0 right-0 px-3 py-1 bg-indigo-500 text-[8px] font-black text-white uppercase tracking-widest rounded-bl-xl shadow-lg">
+                                                            Champion
+                                                        </div>
+                                                    )}
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-black text-slate-200">{item.name}</span>
+                                                        <div className="flex items-center gap-2 mt-0.5">
+                                                            <span className="text-[9px] font-bold text-slate-600 uppercase tracking-tighter">RANK: {idx + 1}</span>
+                                                            {idx !== 0 && item.name !== 'FCFS' && (
+                                                                <span className="text-[8px] font-bold text-emerald-500/60 font-mono">+{efficiencyGain.toFixed(0)}% OPT</span>
+                                                            )}
+                                                            {idx === 0 && item.name !== 'FCFS' && (
+                                                                <span className="text-[9px] font-black text-emerald-400 font-mono animate-pulse">OPTIMIZED (+{efficiencyGain.toFixed(0)}%)</span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <p className={`text-lg font-black font-mono leading-none ${idx === 0 ? 'text-indigo-400' : ''}`}>{item.operationalTime.toFixed(1)}ms</p>
+                                                        <p className="text-[8px] font-bold text-slate-600 uppercase tracking-tighter mt-1">Total Ops Time</p>
+                                                    </div>
                                                 </div>
-                                                <div className="text-right">
-                                                    <p className="text-lg font-black font-mono leading-none">{item.operationalTime.toFixed(1)}ms</p>
-                                                    <p className="text-[8px] font-bold text-indigo-500 uppercase tracking-tighter">Total Ops Time</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </section>
                             </div>
